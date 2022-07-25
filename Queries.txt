@@ -1,0 +1,55 @@
+
+*Query 1  -used to know which Media type had the most sales*
+
+SELECT m.Name Media_Type,
+       count(*) Num_of_Sales
+FROM Customer c
+JOIN Invoice i ON c.CustomerId=i.CustomerId
+JOIN InvoiceLine il ON i.InvoiceId=il.InvoiceId
+JOIN Track t ON il.TrackId=t.TrackId
+JOIN MediaType m ON t.MediaTypeId=m.MediaTypeId
+GROUP BY Media_Type
+ORDER BY Num_of_Sales DESC;
+
+
+*Query 2  -used to know which genre had the most sales*
+
+SELECT g.Name Genre_Name,
+       count(*) Num_of_Sales
+FROM Customer c
+JOIN Invoice i ON c.CustomerId=i.CustomerId
+JOIN InvoiceLine il ON i.InvoiceId=il.InvoiceLineId
+JOIN Track t ON il.TrackId=t.TrackId
+JOIN Genre g ON g.GenreId=t.GenreId
+GROUP BY Genre_Name
+ORDER BY Num_of_Sales DESC
+LIMIT 10;
+
+
+*Query 3  -used to know the Countries which had the most sales*
+
+SELECT c.Country,
+       count(*) Num_of_Sales
+FROM Customer c
+JOIN Invoice i ON c.CustomerId=i.CustomerId
+GROUP BY c.Country
+ORDER BY Num_of_Sales DESC
+LIMIT 10;
+
+
+*Query 4 -used to know the top 10 best selling artists*
+
+SELECT AR.Name Artist_Name,
+       count(*) Num_of_Sales
+FROM Customer c
+JOIN Invoice i ON c.CustomerId=i.CustomerId
+JOIN InvoiceLine il ON i.InvoiceId=il.InvoiceLineId
+JOIN Track t ON il.TrackId=t.TrackId
+JOIN Album a ON a.AlbumId=t.AlbumId
+JOIN Artist AR ON AR.ArtistId=a.ArtistId
+GROUP BY Artist_Name
+ORDER BY Num_of_Sales DESC
+LIMIT 10;
+
+
+              
